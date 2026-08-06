@@ -57,7 +57,7 @@ class MenuServiceTest {
         final Long id = 1L;
         MenuItem item = new MenuItem("Espresso", "Coffee", new BigDecimal("2.50"), true);
         ReflectionTestUtils.setField(item, "id", id);
-        when(repo.save(item)).thenReturn(item);
+        when(repo.save(any(MenuItem.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         MenuItem saved = service.createItem(item);
 

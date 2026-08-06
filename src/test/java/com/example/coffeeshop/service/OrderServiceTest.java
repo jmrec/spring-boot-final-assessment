@@ -56,6 +56,7 @@ class OrderServiceTest {
         Order result = service.createOrder(itemIds);
 
         assertEquals(new BigDecimal("6.70"), result.getTotal());
+
         verify(menuRepo).findById(item1Id);
         verify(menuRepo).findById(item2Id);
         verify(orderRepo).save(any(Order.class));
@@ -73,9 +74,8 @@ class OrderServiceTest {
     void testMarkReady_FromPending() {
         final Long orderId = 1L;
         Order order = new Order(List.of(5L, 10L), new BigDecimal("500.50"));
-        ReflectionTestUtils.setField(order, "id", orderId);
-
         order.setStatus(OrderStatus.PENDING);
+        ReflectionTestUtils.setField(order, "id", orderId);
 
         when(orderRepo.findById(orderId)).thenReturn(Optional.of(order));
         when(orderRepo.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -91,8 +91,8 @@ class OrderServiceTest {
     void testMarkPaid_FromPending() {
         final Long orderId = 1L;
         Order order = new Order(List.of(5L, 10L), new BigDecimal("500.50"));
-        ReflectionTestUtils.setField(order, "id", orderId);
         order.setStatus(OrderStatus.PENDING);
+        ReflectionTestUtils.setField(order, "id", orderId);
 
         when(orderRepo.findById(orderId)).thenReturn(Optional.of(order));
 
