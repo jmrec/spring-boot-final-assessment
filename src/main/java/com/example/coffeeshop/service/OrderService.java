@@ -37,6 +37,16 @@ public class OrderService {
         return order;
     }
 
+    private MenuItem findMenuItemOrThrow(Long id) {
+        MenuItem item = menuRepo.findById(id)
+                                .orElseThrow(() -> {
+                                    log.warn("Menu item {} not found", id);
+                                    return new MenuItemNotFoundException(id);
+                                });
+        log.info("Fetched menu item {}", id);
+        return item;
+    }
+
     public List<Order> getAllOrders() {
         List<Order> orders = orderRepo.findAll();
         log.info("Returned all {} orders", orders.size());
@@ -53,11 +63,13 @@ public class OrderService {
 
         var total = BigDecimal.ZERO;
         for (var id : itemIds) {
-            MenuItem menuItem = menuRepo.findById(id)
-                                        .orElseThrow(() -> new MenuItemNotFoundException(id));
+            MenuItem menuItem = findMenuItemOrThrow(id);
 
-            if (!menuItem.isAvailable())
-                throw new InvalidOrderException("Unavailable menu item with ID: %d".formatted(menuItem.getId()));
+            if (!menuItem.isAvailable()) {
+                String errorMessage = "Unavailable menu item with ID: %d".formatted(menuItem.getId());
+                log.warn(errorMessage);
+                throw new InvalidOrderException(errorMessage);
+            }
 
             total = total.add(menuItem.getPrice());
         }
