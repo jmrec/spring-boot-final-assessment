@@ -1,4 +1,7 @@
 package com.example.coffeeshop.model;
 
-public class OrderStatus {
+public enum OrderStatus {
+    PENDING,
+    READY,
+    PAID
 }
