@@ -1,4 +1,7 @@
 package com.example.coffeeshop.repository;
 
-public interface OrderRepository {
+import com.example.coffeeshop.model.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }
