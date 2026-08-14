@@ -1,6 +1,5 @@
 package com.example.coffeeshop.dto;
 
-import com.example.coffeeshop.model.Order;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.example.coffeeshop.service;
 
-import com.example.coffeeshop.dto.MenuItemRequest;
 import com.example.coffeeshop.exception.MenuItemNotFoundException;
 import com.example.coffeeshop.model.MenuItem;
 import com.example.coffeeshop.repository.MenuItemRepository;
