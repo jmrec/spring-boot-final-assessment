@@ -23,16 +23,9 @@ public class AgentService {
     }
 
     public String run(String userRequest) {
-        String response = chatClient.prompt()
-                                    .user(userRequest)
-                                    .call()
-                                    .content();
-
-        String greeting = "Hi, I'm Juan's barista assistant.";
-        if (response != null && !response.startsWith(greeting)) {
-            return greeting + "\n\n" + response;
-        } else {
-            return response;
-        }
+        return chatClient.prompt()
+                        .user(userRequest)
+                        .call()
+                        .content();
     }
 }
